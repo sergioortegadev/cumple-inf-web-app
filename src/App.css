@@ -1,0 +1,156 @@
+:root {
+  --main-color: #ff0000;
+  --main-color-hover: #e22121;
+  --main-color-active: #ca2f2f;
+  --second-color: #474343;
+  --thirth-color: #6b6060;
+  --fourth-color: #9c9090;
+  --fifth-color: #f3ecec;
+  --highlights-main-color: #ff0;
+  --highlights-second-color: #222;
+  --highlights2-main-color: rgb(236, 213, 78);
+  --highlights2-second-color: #162a3d;
+  --title-font: "Source Sans Pro", sans-serif;
+  --main-font: "Oxygen", sans-serif;
+  --clock-font: "Orbitron", sans-serif;
+  --racing-font: "Racing Sans One", cursive;
+}
+
+html {
+  background-color: var(--second-color);
+}
+a {
+  color: inherit;
+  text-decoration: none;
+}
+body {
+  font-family: var(--main-font);
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+.container-fluid {
+  --bs-gutter-x: 0rem;
+  max-width: 900px;
+}
+.content {
+  margin: 0 1rem;
+}
+.hero-image {
+  display: flex;
+  flex-flow: column nowrap;
+  width: 100%;
+}
+.hero-image img {
+  object-fit: cover;
+  object-position: 30% 30%;
+}
+/*  //Si usamos la Hero como background de un elemento
+
+.hero-image div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  flex: 1 1 auto;
+}
+.hero-image h3 {
+  position: absolute;
+  display: flex;
+  top: 0rem;
+  left: 0rem;
+  padding: 0.5rem 0.25rem;
+  background-color: rgba(255, 34, 34, 0.75);
+  color: #111;
+}
+.hero-image h1 {
+  position: absolute;
+  top: 0;
+  padding: 1.5rem 1rem;
+  background-color: rgba(155, 155, 155, 0.65);
+  border-radius: 0.7rem;
+}
+ */
+.nombre-cumple {
+  margin: 1rem auto;
+  padding: 0.5rem 1rem;
+  text-align: center;
+}
+.nombre-cumple h2 {
+  font-size: 2rem;
+  color: var(--main-color);
+  font-style: italic;
+  font-weight: 900;
+  font-family: var(--title-font);
+}
+.highlight {
+  margin: 0.5rem auto;
+  padding: 0.5rem 1rem;
+  border-radius: 12px;
+  text-align: center;
+  background-color: var(--main-color);
+  color: var(--fifth-color);
+}
+.countdown {
+  margin: 2rem auto;
+  padding: 0.5rem 1rem;
+  border-radius: 12px;
+  text-align: center;
+  max-width: max-content;
+  font-family: var(--title-font);
+  background-color: var(--highlights-main-color);
+  color: var(--highlights-second-color);
+}
+.countdown * {
+  font-size: 2rem;
+}
+
+.imagenes-salon {
+  display: flex;
+  flex-flow: column nowrap;
+  width: 100%;
+}
+
+.salon-frente {
+  object-fit: cover;
+  object-position: 30% 62%;
+  max-height: 30vh;
+}
+
+/*  - - Grid Sesion Fotos - -  */
+.grid-insta {
+  display: grid;
+  grid-template-columns: repeat(3, 33.3%);
+}
+.grid-insta img {
+  width: 100%;
+  height: auto;
+}
+
+footer {
+  background-color: var(--highlights2-second-color);
+}
+
+.footer-div {
+  display: flex;
+  width: 100%;
+  min-height: 20vh;
+  background-color: var(--highlights2-second-color);
+  color: var(--fourth-color);
+}
+
+.footer-tit {
+  width: 25%;
+  padding: 1rem 2rem;
+}
+.footer-data {
+  width: 70%;
+  padding: 3rem;
+}
+@media only screen and (min-width: 900px) {
+  .footer-div {
+    max-width: 900px;
+    margin-right: auto;
+    margin-left: auto;
+  }
+}

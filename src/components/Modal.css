@@ -1,0 +1,61 @@
+.modal {
+  position: fixed;
+  z-index: 999;
+  top: 0;
+  left: 0;
+  width: 100%;
+  min-height: 100vh;
+  background-color: rgba(0, 0, 0, 0.8);
+  display: none;
+  justify-content: center;
+  align-items: center;
+}
+.modal.is-open {
+  display: flex;
+}
+.modal-container {
+  position: relative;
+  background-color: var(--second-color);
+  box-shadow: 7px 7px 14px rgba(155, 155, 155, 0.5);
+  max-width: 100%;
+  overflow-y: auto;
+  overflow-x: hidden;
+  font-size: large;
+}
+.modal-cart-container {
+  position: relative;
+  background-color: var(--second-color);
+  padding: 1rem 1rem 8rem 1rem;
+  border-radius: 0.6rem;
+  box-shadow: 7px 7px 14px rgba(155, 155, 155, 0.5);
+  min-height: 20rem;
+  max-height: 70vh;
+  min-width: 20rem;
+  max-width: 40rem;
+  overflow-y: auto;
+  overflow-x: hidden;
+  font-size: large;
+}
+.modal-close {
+  position: absolute;
+  top: 1rem;
+  right: 1.3rem;
+  background-color: transparent;
+  color: var(--fifth-color);
+  border: 2.5px dotted var(--fifth-color);
+  border-radius: 100%;
+  font-weight: bold;
+  font-size: 1.5rem;
+}
+.modal-head img {
+  max-height: 95vh;
+  max-width: 95vw;
+  object-fit: cover;
+  object-position: 50% 70%;
+}
+@media only screen and (max-width: 840px) {
+  .modal-container {
+    min-width: 20rem;
+    max-width: 95vw;
+  }
+}
