@@ -4,6 +4,7 @@ import { useModal } from "../hooks/useModal";
 import "./Modal.css";
 import { FigureModal } from "./FigureModal";
 import { useState } from "react";
+import FormConfirm from "./FormConfirm";
 
 export default function Home() {
   const dataCumple = {
@@ -125,6 +126,10 @@ export default function Home() {
           />
         </article>
 
+        <article id="joa4banner" className="hero-image">
+          <img src="./assets/joa4.png" alt="logo joaquin 4" />
+        </article>
+
         <article id="fotos" className="content">
           <div className="grid-insta">
             <img
@@ -217,18 +222,7 @@ export default function Home() {
         )}
 
         <article id="formConfirm" className="content">
-          <div className="highlight">
-            <br />
-            <br />
-            <br />
-            <br />
-            <h3>Formulario CONFIRMACION</h3>
-            Proximamente
-            <br />
-            <br />
-            <br />
-            <br />
-          </div>
+          <FormConfirm />
         </article>
 
         {/* <HashLink to="#1">
