@@ -36,10 +36,13 @@ const Countdown = ({ limitDate, name, fotosEvento }) => {
         clearInterval(countdownTempo);
         if (fotosEvento) {
           setCount(
-            `El cumple ya finalizó. Gracias por venir!!! En unos días se publicarán aquí las fotos del evento.`
+            <>
+              <p>El cumple ya finalizó. Gracias por venir!!!</p>
+              <p>En unos días se publicarán aquí las fotos del evento.</p>
+            </>
           );
         } else {
-          setCount(`El cumple ya finalizó. Gracias por venir!!!`);
+          setCount(<p>El cumple ya finalizó. Gracias por venir!!!</p>);
         }
       }
     }

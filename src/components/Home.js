@@ -1,4 +1,4 @@
-// import { HashLink } from "react-router-hash-link";
+import { HashLink } from "react-router-hash-link";
 import Countdown from "../Countdown";
 import { useModal } from "../hooks/useModal";
 import "./Modal.css";
@@ -7,8 +7,13 @@ import { useState } from "react";
 import FormConfirm from "./FormConfirm";
 
 export default function Home() {
+  // Aquí poner la fecha y hora a calcular, en formato "YYYY/MM/DD HH:MM:SS".
+  const limitDate = "2023/03/12 19:00:00";
+
+  // Datos Cumpleañera/o y flia
   const dataCumple = {
     name: "Joaquín",
+    whatsapp: 3515222418,
     añosCumple: 4,
     fecha: "El domingo 12 de marzo",
     horario: "de 19 a 21:30",
@@ -33,16 +38,42 @@ export default function Home() {
     fotosEvento: true,
   };
 
-  // Aquí poner la fecha y hora a calcular
-  const limitDate = "Mar 12, 2023 19:00:00";
-
   // Datos Salón:
   const salon = {
     name: "Arlekin",
+    whatsapp: 3515127986,
+    instagram: "https://www.instagram.com/arlekinfiestasinfantiles",
+    facebook:
+      "https://www.facebook.com/Arlekin-Fiestas-Infantiles-1423939864491867/",
+    tiktok: "",
+    youtube: "",
     imageFront: "./assets/arlekin2.jpg",
     images: [],
     direccion: "Av. Sagrada Familia 1328",
   };
+
+  //  -  Menu y UpButton -
+  const handleMenu = () => {
+    //  switcheamos la clase "is-active" de esta forma: buscamos el selector "panel" y luego entra a su lista de clases y con el método toggle añade o quita la clase "is-active"
+    document.querySelector(".panel").classList.toggle("is-active");
+    document.querySelector(".hamburguer-btn").classList.toggle("is-active");
+  };
+  const handleLinkMenu = () => {
+    // con este tercer parámetro quitamos el "is-active" cuando se selecciona algún link del menú, cerrándolo.
+    document.querySelector(".panel").classList.remove("is-active");
+    document.querySelector(".hamburguer-btn").classList.remove("is-active");
+  };
+
+  // Para que el botón aparezca cuando hacemos scroll para abajo, y desaparezca cuando suba. Usamos las propiedades: "pageYOffset" del objeto Window, || o la propiedad "documentElement.scrollTop" del Document, para detectar a qué distancia se ha hecho scroll vertical, y luego determinar que cuando sea mayor de 400 haga aparecer (quita el hidden) al botón. Con else volvemos a ocultarlo.
+  window.addEventListener("scroll", (e) => {
+    let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+    if (scrollTop > 450) {
+      document.querySelector(".scroll-top-boton").classList.remove("hidden");
+    } else {
+      document.querySelector(".scroll-top-boton").classList.add("hidden");
+    }
+    //podríamos ver la actividad del scroll con console.log(window.pageYOffset, document.documentElement.scrollTop)
+  });
 
   /* Apertura y Cierre Fotos - Modales */
   const [isOpenModal, openModal, closeModal] = useModal(false);
@@ -64,6 +95,24 @@ export default function Home() {
   }
   return (
     <>
+      {/* Menu Desplegado */}
+      <aside className="panel">
+        <nav className="menu">
+          <HashLink onClick={handleLinkMenu} smooth to="#cuando">
+            ¿Cuándo se festeja?
+          </HashLink>
+          <HashLink onClick={handleLinkMenu} smooth to="#salon">
+            ¿Dónde se festeja?
+          </HashLink>
+          <HashLink onClick={handleLinkMenu} smooth to="#fotos">
+            Mirá estas fotos!
+          </HashLink>
+          <HashLink onClick={handleLinkMenu} smooth to="#formConfirm">
+            Confirmá tu participación!
+          </HashLink>
+        </nav>
+      </aside>
+
       {/*  // Contenido principal  */}
       <main className="container-fluid">
         <div className="hero-image">
@@ -82,6 +131,7 @@ export default function Home() {
             Festejamos el cumple {dataCumple.añosCumple} de {dataCumple.name}
           </h2>
         </article>
+
         <article id="cuando" className="content">
           <div className="highlight">
             <h2>¿Cuándo es?</h2>
@@ -108,106 +158,93 @@ export default function Home() {
                 src={salon.imageFront}
                 alt="foto fachada salón"
               />
-              <h4>{salon.direccion}</h4>
             </div>
+            <h4>{salon.direccion}</h4>
+            {/* - - Redes Sociales Salón - - */}
+            <p>Podés contactar al salón por:</p>
+            <div className="redes-salon">
+              {/*  WHATSAPP */}
+              <a
+                href={
+                  window.navigator.platform === "Win32"
+                    ? `https://wa.me/54${salon.whatsapp}?text=Mensaje%20desde:%20INVITACION%20VIRTUAL%20INTELIGENTE®%0AHola%20les%20consulto%20por%20el%20salón%20${salon.name}.%0AIndicar%20fecha%20y%20cuántos%20años%20cumple :-)`
+                    : `https://wa.me/54${salon.whatsapp}?text=Mensaje%20desde:%20INVITACION%20VIRTUAL%20INTELIGENTE®%0AHola%20les%20consulto%20por%20el%20salón%20${salon.name}%20 😄Indicar%20fecha%20y%20cuántos%20años%20🎊%20cumple:%20`
+                }
+                target="_blank"
+                rel="noreferrer"
+              >
+                <i
+                  className="bi bi-whatsapp"
+                  style={{
+                    color: "rgb(18, 175, 10)",
+                  }}
+                ></i>
+              </a>
+              <a href={salon.instagram} target="_blank" rel="noreferrer">
+                <i
+                  className="bi bi-instagram"
+                  style={{
+                    color: "rgb(188, 42, 141)",
+                  }}
+                ></i>
+              </a>
+              <a href={salon.facebook} target="_blank" rel="noreferrer">
+                <i
+                  className="bi bi-facebook"
+                  style={{
+                    color: "rgb(59,89,151)",
+                  }}
+                ></i>
+              </a>
+              {/* <a href={salon.tiktok} target="_blank" rel="noreferrer">
+                <i
+                  className="bi bi-tiktok"
+                  style={{
+                    color: "#000",
+                  }}
+                ></i>
+              </a>
+              
+              <a href={salon.youtube} target="_blank" rel="noreferrer">
+                <i
+                  className="bi bi-youtube"
+                  style={{
+                    color: "#f00",
+                  }}
+                ></i>
+              </a> */}
+            </div>
+            <iframe
+              title="Ubicacion Salon en gmaps"
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3405.9945390790076!2d-64.22904348464644!3d-31.386714101958383!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x943298dba6407d2f%3A0x17633a4330ac8eab!2sArlek%C3%ADn%20Fiestas%20Infantiles!5e0!3m2!1ses!2sar!4v1677618379217!5m2!1ses!2sar"
+              style={{
+                width: "100%",
+                height: "30vh",
+                maxHeight: "40vh",
+                style: "border:0",
+              }}
+              allowFullScreen=""
+              loading="lazy"
+              referrerPolicy="no-referrer-when-downgrade"
+            />
           </div>
-          <iframe
-            title="Ubicacion Salon en gmaps"
-            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3405.9945390790076!2d-64.22904348464644!3d-31.386714101958383!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x943298dba6407d2f%3A0x17633a4330ac8eab!2sArlek%C3%ADn%20Fiestas%20Infantiles!5e0!3m2!1ses!2sar!4v1677618379217!5m2!1ses!2sar"
-            style={{
-              width: "100%",
-              height: "30vh",
-              maxHeight: "40vh",
-              style: "border:0",
-            }}
-            allowFullScreen=""
-            loading="lazy"
-            referrerPolicy="no-referrer-when-downgrade"
-          />
         </article>
 
         <article id="joa4banner" className="hero-image">
           <img src="./assets/joa4.png" alt="logo joaquin 4" />
         </article>
 
+        {/*  - - Fotos cumpleañero/a - -  */}
         <article id="fotos" className="content">
           <div className="grid-insta">
-            <img
-              onClick={(e) => openOneModal(1)}
-              src={dataCumple.images[0].foto}
-              alt="foto"
-            />
-            <img
-              onClick={(e) => openOneModal(2)}
-              src={dataCumple.images[1].foto}
-              alt="foto"
-            />
-
-            <img
-              onClick={(e) => openOneModal(3)}
-              src={dataCumple.images[2].foto}
-              alt="foto"
-            />
-            <img
-              onClick={(e) => openOneModal(4)}
-              src={dataCumple.images[3].foto}
-              alt="foto"
-            />
-            <img
-              onClick={(e) => openOneModal(5)}
-              src={dataCumple.images[4].foto}
-              alt="foto"
-            />
-            <img
-              onClick={(e) => openOneModal(6)}
-              src={dataCumple.images[5].foto}
-              alt="foto"
-            />
-            <img
-              onClick={(e) => openOneModal(7)}
-              src={dataCumple.images[6].foto}
-              alt="foto"
-            />
-            <img
-              onClick={(e) => openOneModal(8)}
-              src={dataCumple.images[7].foto}
-              alt="foto"
-            />
-            <img
-              onClick={(e) => openOneModal(9)}
-              src={dataCumple.images[8].foto}
-              alt="foto"
-            />
-            <img
-              onClick={(e) => openOneModal(10)}
-              src={dataCumple.images[9].foto}
-              alt="foto"
-            />
-            <img
-              onClick={(e) => openOneModal(11)}
-              src={dataCumple.images[10].foto}
-              alt="foto"
-            />
-            <img
-              onClick={(e) => openOneModal(12)}
-              src={dataCumple.images[11].foto}
-              alt="foto"
-            />
-            <img
-              onClick={(e) => openOneModal(13)}
-              src={dataCumple.images[12].foto}
-              alt="foto"
-            />
-            <img
-              onClick={(e) => openOneModal(14)}
-              src={dataCumple.images[13].foto}
-              alt="foto"
-            />
-            <img
-              onClick={(e) => openOneModal(15)}
-              src={dataCumple.images[14].foto}
-              alt="foto"
-            />
+            {dataCumple.images.map((el) => (
+              <img
+                onClick={(e) => openOneModal(el.id)}
+                src={el.foto}
+                key={el.id}
+                alt="foto"
+              />
+            ))}
           </div>
         </article>
 
@@ -224,18 +261,27 @@ export default function Home() {
         <article id="formConfirm" className="content">
           <FormConfirm />
         </article>
-
-        {/* <HashLink to="#1">
-          <button type="button" className="btn btn-success">
-          Titulo 1
-          </button>
-          </HashLink>
-          <HashLink to="#2">
-          <button type="button" className="btn btn-success">
-          Titulo 2
-          </button>
-         </HashLink> */}
       </main>
+
+      {/* Botón Up */}
+      <button className="scroll-top-boton btn btn-dark hidden">
+        <HashLink smooth to="#top">
+          <div>
+            <i className="bi bi-arrow-up-circle-fill"></i>
+          </div>
+        </HashLink>
+      </button>
+
+      {/* Hamburguer Menu */}
+      <button
+        onClick={handleMenu}
+        className="hamburguer-btn hamburger hamburger--spring"
+        type="button"
+      >
+        <span className="hamburger-box">
+          <span className="hamburger-inner"></span>
+        </span>
+      </button>
     </>
   );
 }

@@ -10,6 +10,10 @@
   --highlights-second-color: #222;
   --highlights2-main-color: rgb(236, 213, 78);
   --highlights2-second-color: #162a3d;
+  --hamb-menu-main-color: #2c2e43;
+  --hamb-menu-second-color: #b2b1b9;
+  --hamb-menu-main-modal-color: #2c2e43d0;
+  --hamb-menu-second-modal-color: #fff159ea;
   --title-font: "Source Sans Pro", sans-serif;
   --main-font: "Oxygen", sans-serif;
   --clock-font: "Orbitron", sans-serif;
@@ -117,6 +121,30 @@ body {
   max-height: 30vh;
 }
 
+/*  - Redes Salon -  */
+#salon p {
+  margin-bottom: 0;
+}
+.redes-salon {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  margin: 0.8rem 0;
+}
+.redes-salon i {
+  font-size: 1.8rem;
+  background-color: #fff;
+  margin: 0.5rem;
+  padding: 0.5rem 0.8rem;
+  border-radius: 0.5rem;
+  box-shadow: 6px 5px 3px #9c909080;
+}
+.redes-salon i:hover,
+.redes-salon i:active {
+  box-shadow: none;
+  background-color: #ccc;
+}
+
 /*  - - Grid Sesion Fotos - -  */
 .grid-insta {
   display: grid;
@@ -183,10 +211,136 @@ footer {
   width: 70%;
   padding: 3rem;
 }
+
+/*  Up Button */
+.scroll-top-boton {
+  position: fixed;
+  z-index: 999;
+  bottom: calc(4.7rem + 1vh);
+  right: calc(0.5rem + 1vw);
+  width: 3.5rem;
+  height: 3.5rem;
+  border-radius: 7px;
+  font-size: 2.5rem;
+  font-weight: bold;
+  background-color: var(--hamb-menu-main-color);
+  color: var(--hamb-menu-second-color);
+  cursor: pointer;
+  outline: 0;
+  border: 0;
+  transition: all 0.7s ease-out;
+}
+.scroll-top-boton:hover {
+  background-color: var(--hamb-menu-second-color);
+  color: var(--hamb-menu-main-color);
+}
+.scroll-top-boton div {
+  transform: translate(-0.25rem, -0.45rem);
+}
+.scroll-top-boton i {
+  color: var(--hamb-menu-second-color);
+}
+.scroll-top-boton i:hover {
+  color: var(--hamb-menu-main-color);
+}
+.hidden {
+  visibility: hidden;
+  opacity: 0;
+}
+
+/* Hamburguer Menu */
+.panel {
+  visibility: hidden;
+  opacity: 0;
+  background-color: var(--hamb-menu-second-modal-color);
+  position: fixed;
+  z-index: 998;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  /* Overflow: Para hacer que el contenido, los link del menú que desbordan, se pueda escrolear */
+  overflow-y: auto;
+  transition: transform 0.3s ease, opacity 0.3s ease;
+  /* De arriba */
+  transform: translate(0, -100%);
+  /* De abajo */
+  transform: translate(0, 100%);
+  /* De la derecha */
+  transform: translate(100%, 0);
+  /* De la izquierda */
+  transform: translate(-100%, 0);
+  /* De la abajo a la derecha */
+  transform: translate(100%, 100%);
+}
+.panel.is-active {
+  transform: translate(0, 0);
+  opacity: 1;
+  visibility: visible;
+}
+.hamburguer-btn {
+  color: var(--hamb-menu-second-color);
+  position: fixed;
+  z-index: 999;
+  bottom: calc(0.7rem + 1vh);
+  right: calc(0.5rem + 1vw);
+  width: 3.5rem;
+  height: 3.5rem;
+  border-radius: 0.4rem;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: var(--hamb-menu-main-color);
+}
+.menu {
+  width: inherit;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: center;
+  text-align: center;
+}
+.menu a {
+  padding: 1rem;
+  width: inherit;
+  display: block;
+  font-size: 1.5rem;
+  text-decoration: none;
+  color: var(--hamb-menu-main-color);
+  transition: all 0.1s ease-in;
+}
+.menu a:active,
+.menu a:hover {
+  font-weight: bold;
+  color: var(--hamb-menu-second-color);
+  background-color: var(--hamb-menu-main-modal-color);
+}
+
 @media only screen and (min-width: 900px) {
   .footer-div {
     max-width: 900px;
     margin-right: auto;
     margin-left: auto;
+  }
+  .panel {
+    left: 70%;
+    width: 30%;
+  }
+  .menu {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    /*  align-items: flex-start; */
+    text-align: start;
+    /*text-align: center; */
+  }
+  .menu a {
+    padding: 1rem 0 2rem 0.7rem;
+    font-size: 1.2rem;
+    font-weight: bold;
   }
 }
