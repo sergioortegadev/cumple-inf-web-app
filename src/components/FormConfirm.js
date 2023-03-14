@@ -27,7 +27,7 @@ const validationsForm = (form) => {
   }
   return errors;
 
-  // validaciones por si hubiera otros campos (email, asunto, etc)
+  // NO BORRAR: validaciones por si hubiera otros campos (email, asunto, etc)
   /* 
   if (!form.email.trim()) {
     errors.email = "El campo 'email' es requerido";
@@ -85,7 +85,9 @@ const FormConfirm = () => {
             <p>{errors.invitados}</p>
           </div>
         )}
-        <input type="submit" value="Enviar" />
+        <button type="button" className="btn btn-outline-light">
+          <input type="submit" value="Enviar" />
+        </button>
       </form>
       <br />
       {loading && <Loader />}

@@ -40,6 +40,7 @@
   position: absolute;
   top: 1rem;
   right: 1.3rem;
+  padding: 0 0.6rem;
   background-color: transparent;
   color: var(--fifth-color);
   border: 2.5px dotted var(--fifth-color);
@@ -53,6 +54,25 @@
   object-fit: cover;
   object-position: 50% 70%;
 }
+.prev-photo,
+.next-photo {
+  z-index: 999;
+  position: absolute;
+  top: 40%;
+  border: none;
+  border-radius: 100%;
+  font-size: 2rem;
+  padding: 1.5rem 2rem;
+  color: var(--fifth-color);
+  background-color: #44444433;
+}
+.next-photo {
+  right: 1rem;
+}
+.prev-photo {
+  left: 1rem;
+}
+
 @media only screen and (max-width: 840px) {
   .modal-container {
     min-width: 20rem;

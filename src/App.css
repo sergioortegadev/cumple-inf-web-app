@@ -189,6 +189,11 @@ textarea {
   color: #ff6;
   text-align: center;
 }
+input[type="submit"] {
+  border: none;
+  background-color: transparent;
+  color: #ccc;
+}
 
 /* - -  Footer  - -  */
 

@@ -3,54 +3,17 @@ import Countdown from "../Countdown";
 import { useModal } from "../hooks/useModal";
 import "./Modal.css";
 import { FigureModal } from "./FigureModal";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import FormConfirm from "./FormConfirm";
+import { DataCliente } from "./DataCliente";
+import { DataSalon } from "./DataSalon";
 
 export default function Home() {
-  // Aquí poner la fecha y hora a calcular, en formato "YYYY/MM/DD HH:MM:SS".
-  const limitDate = "2023/03/12 19:00:00";
+  // Ingresar datos del cliente y fecha límite del contDown en DataCliente.js
+  const { limitDate, dataCumple } = DataCliente();
 
-  // Datos Cumpleañera/o y flia
-  const dataCumple = {
-    name: "Joaquín",
-    whatsapp: 3515222418,
-    añosCumple: 4,
-    fecha: "El domingo 12 de marzo",
-    horario: "de 19 a 21:30",
-    invitacion: "./assets/hero.jpg",
-    images: [
-      { id: 1, foto: "./assets/foto01.jpg" },
-      { id: 2, foto: "./assets/foto02.jpg" },
-      { id: 3, foto: "./assets/foto03.jpg" },
-      { id: 4, foto: "./assets/foto04.jpg" },
-      { id: 5, foto: "./assets/foto05.jpg" },
-      { id: 6, foto: "./assets/foto06.jpg" },
-      { id: 7, foto: "./assets/foto07.jpg" },
-      { id: 8, foto: "./assets/foto08.jpg" },
-      { id: 9, foto: "./assets/foto09.jpg" },
-      { id: 10, foto: "./assets/foto10.jpg" },
-      { id: 11, foto: "./assets/foto11.jpg" },
-      { id: 12, foto: "./assets/foto12.jpg" },
-      { id: 13, foto: "./assets/foto13.jpg" },
-      { id: 14, foto: "./assets/foto14.jpg" },
-      { id: 15, foto: "./assets/foto15.jpg" },
-    ],
-    fotosEvento: true,
-  };
-
-  // Datos Salón:
-  const salon = {
-    name: "Arlekin",
-    whatsapp: 3515127986,
-    instagram: "https://www.instagram.com/arlekinfiestasinfantiles",
-    facebook:
-      "https://www.facebook.com/Arlekin-Fiestas-Infantiles-1423939864491867/",
-    tiktok: "",
-    youtube: "",
-    imageFront: "./assets/arlekin2.jpg",
-    images: [],
-    direccion: "Av. Sagrada Familia 1328",
-  };
+  // Ingresar datos del salón en DataSalon.js
+  const { salon } = DataSalon();
 
   //  -  Menu y UpButton -
   const handleMenu = () => {
@@ -64,7 +27,7 @@ export default function Home() {
     document.querySelector(".hamburguer-btn").classList.remove("is-active");
   };
 
-  // Para que el botón aparezca cuando hacemos scroll para abajo, y desaparezca cuando suba. Usamos las propiedades: "pageYOffset" del objeto Window, || o la propiedad "documentElement.scrollTop" del Document, para detectar a qué distancia se ha hecho scroll vertical, y luego determinar que cuando sea mayor de 400 haga aparecer (quita el hidden) al botón. Con else volvemos a ocultarlo.
+  // UpButton: Para que el botón aparezca cuando hacemos scroll para abajo, y desaparezca cuando suba. Usamos las propiedades: "pageYOffset" del objeto Window, || o la propiedad "documentElement.scrollTop" del Document, para detectar a qué distancia se ha hecho scroll vertical, y luego determinar que cuando sea mayor de 400 haga aparecer (quita el hidden) al botón. Con else volvemos a ocultarlo.
   window.addEventListener("scroll", (e) => {
     let scrollTop = window.pageYOffset || document.documentElement.scrollTop;
     if (scrollTop > 450) {
@@ -81,11 +44,61 @@ export default function Home() {
   // Esta var de estado envía la ubicacion de la foto como props al componente FigureModal que se abre como una ventana modal
   const [data, setData] = useState({});
 
+  // Galerias de fotos - Slides
+  const [foto, setFoto] = useState(1);
+
+  function openOneModalSalon() {
+    setFoto(1);
+    salon.images.forEach((el) => {
+      if (el.id === foto) {
+        setData({
+          galery: "salon",
+          foto: el.foto,
+        });
+      }
+    });
+    openModal();
+  }
+
+  const btnPhotoNext = () => {
+    if (data.galery === "salon" && foto < salon.images.length)
+      setFoto(foto + 1);
+    if (data.galery === "cumple" && foto < dataCumple.images.length)
+      setFoto(foto + 1);
+  };
+  const btnPhotoPrev = () => {
+    if (foto !== 1) setFoto(foto - 1);
+  };
+
+  useEffect(() => {
+    if (data.galery === "salon") {
+      salon.images.forEach((el) => {
+        if (el.id === foto) {
+          setData({
+            galery: "salon",
+            foto: el.foto,
+          });
+        }
+      });
+    } else {
+      dataCumple.images.forEach((el) => {
+        if (el.id === foto) {
+          setData({
+            galery: "cumple",
+            foto: el.foto,
+          });
+        }
+      });
+    }
+  }, [foto]);
+
   function openOneModal(id) {
     setData({});
+    setFoto(id);
     dataCumple.images.map((el) => {
       if (id === el.id) {
         setData({
+          galery: "cumple",
           id: el.id,
           foto: el.foto,
         });
@@ -93,6 +106,7 @@ export default function Home() {
     });
     openModal();
   }
+
   return (
     <>
       {/* Menu Desplegado */}
@@ -134,12 +148,12 @@ export default function Home() {
 
         <article id="cuando" className="content">
           <div className="highlight">
-            <h2>¿Cuándo es?</h2>
-            <h3>
+            <h3>¿Cuándo es?</h3>
+            <h2>
               {dataCumple.fecha}
               <br />
               {dataCumple.horario}
-            </h3>
+            </h2>
           </div>
 
           <Countdown
@@ -154,6 +168,7 @@ export default function Home() {
             <h3>En el salón {salon.name}</h3>
             <div className="imagenes-salon">
               <img
+                onClick={(e) => openOneModalSalon()}
                 className="salon-frente"
                 src={salon.imageFront}
                 alt="foto fachada salón"
@@ -162,57 +177,68 @@ export default function Home() {
             <h4>{salon.direccion}</h4>
             {/* - - Redes Sociales Salón - - */}
             <p>Podés contactar al salón por:</p>
+            <h5>
+              Teléfono: <a href={"tel:" + salon.telefono}>{salon.telefono}</a>
+            </h5>
             <div className="redes-salon">
-              {/*  WHATSAPP */}
-              <a
-                href={
-                  window.navigator.platform === "Win32"
-                    ? `https://wa.me/54${salon.whatsapp}?text=Mensaje%20desde:%20INVITACION%20VIRTUAL%20INTELIGENTE®%0AHola%20les%20consulto%20por%20el%20salón%20${salon.name}.%0AIndicar%20fecha%20y%20cuántos%20años%20cumple :-)`
-                    : `https://wa.me/54${salon.whatsapp}?text=Mensaje%20desde:%20INVITACION%20VIRTUAL%20INTELIGENTE®%0AHola%20les%20consulto%20por%20el%20salón%20${salon.name}%20 😄Indicar%20fecha%20y%20cuántos%20años%20🎊%20cumple:%20`
-                }
-                target="_blank"
-                rel="noreferrer"
-              >
-                <i
-                  className="bi bi-whatsapp"
-                  style={{
-                    color: "rgb(18, 175, 10)",
-                  }}
-                ></i>
-              </a>
-              <a href={salon.instagram} target="_blank" rel="noreferrer">
-                <i
-                  className="bi bi-instagram"
-                  style={{
-                    color: "rgb(188, 42, 141)",
-                  }}
-                ></i>
-              </a>
-              <a href={salon.facebook} target="_blank" rel="noreferrer">
-                <i
-                  className="bi bi-facebook"
-                  style={{
-                    color: "rgb(59,89,151)",
-                  }}
-                ></i>
-              </a>
-              {/* <a href={salon.tiktok} target="_blank" rel="noreferrer">
-                <i
-                  className="bi bi-tiktok"
-                  style={{
-                    color: "#000",
-                  }}
-                ></i>
-              </a>
-              
-              <a href={salon.youtube} target="_blank" rel="noreferrer">
-                <i
-                  className="bi bi-youtube"
-                  style={{
-                    color: "#f00",
-                  }}
-                ></i>
-              </a> */}
+              {salon.whatsapp && (
+                <a
+                  href={
+                    window.navigator.platform === "Win32"
+                      ? `https://wa.me/54${salon.whatsapp}?text=Mensaje%20desde:%20INVITACION%20VIRTUAL%20INTELIGENTE®%0AHola%20les%20consulto%20por%20el%20salón%20${salon.name}.%0AIndicar%20fecha%20y%20cuántos%20años%20cumple :-)`
+                      : `https://wa.me/54${salon.whatsapp}?text=Mensaje%20desde:%20INVITACION%20VIRTUAL%20INTELIGENTE®%0AHola%20les%20consulto%20por%20el%20salón%20${salon.name}%20 😄Indicar%20fecha%20y%20cuántos%20años%20🎊%20cumple:%20`
+                  }
+                  target="_blank"
+                  rel="noreferrer"
+                >
+                  <i
+                    className="bi bi-whatsapp"
+                    style={{
+                      color: "rgb(18, 175, 10)",
+                    }}
+                  ></i>
+                </a>
+              )}
+              {salon.instagram && (
+                <a href={salon.instagram} target="_blank" rel="noreferrer">
+                  <i
+                    className="bi bi-instagram"
+                    style={{
+                      color: "rgb(188, 42, 141)",
+                    }}
+                  ></i>
+                </a>
+              )}
+              {salon.facebook && (
+                <a href={salon.facebook} target="_blank" rel="noreferrer">
+                  <i
+                    className="bi bi-facebook"
+                    style={{
+                      color: "rgb(59,89,151)",
+                    }}
+                  ></i>
+                </a>
+              )}
+              {salon.tiktok && (
+                <a href={salon.tiktok} target="_blank" rel="noreferrer">
+                  <i
+                    className="bi bi-tiktok"
+                    style={{
+                      color: "#000",
+                    }}
+                  ></i>
+                </a>
+              )}
+              {salon.youtube && (
+                <a href={salon.youtube} target="_blank" rel="noreferrer">
+                  <i
+                    className="bi bi-youtube"
+                    style={{
+                      color: "#f00",
+                    }}
+                  ></i>
+                </a>
+              )}
             </div>
             <iframe
               title="Ubicacion Salon en gmaps"
@@ -248,13 +274,15 @@ export default function Home() {
           </div>
         </article>
 
-        {/*  Modals para la apertura de las fotos  */}
+        {/*  Modals para la apertura de las fotos del cliente y del salon */}
         {isOpenModal && (
           <FigureModal
             key={data.id}
             foto={data.foto}
             isOpenModal={isOpenModal}
             closeModal={closeModal}
+            btnPhotoNext={btnPhotoNext}
+            btnPhotoPrev={btnPhotoPrev}
           />
         )}
 

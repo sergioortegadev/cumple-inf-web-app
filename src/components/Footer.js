@@ -2,7 +2,7 @@ const Footer = () => {
   return (
     <footer>
       <div className="footer-div">
-        <h4 className="footer-tit">Invitación Inteligente Virtual</h4>
+        <h4 className="footer-tit">Invitación Virtual Inteligente</h4>
         <div className="footer-data">
           <h5>Desarrollado por</h5>
           <a

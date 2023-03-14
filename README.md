@@ -2,6 +2,10 @@
 
 <image src="./readme.jpg" alt="printscreen web app">
 
+## It has two times. The time before the party, and the time after the party. For this there are two Releases
+
+## Before:
+
 ## + Content:
 
 <br>
