@@ -144,15 +144,33 @@ body {
   box-shadow: none;
   background-color: #ccc;
 }
+/*  - - - Insta Galery - - - */
+.insta-galery {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 5px;
+  margin-bottom: 1rem;
+}
+.insta-gal-div {
+  display: flex;
+  justify-content: center;
+}
+.insta-foto {
+  flex: 1 1 auto;
+  width: 100%;
+  object-fit: cover;
+  object-position: 50% 25%;
+}
 
-/*  - - Grid Sesion Fotos - -  */
+/*  - - Grid  Fotos - -  */
 .grid-insta {
   display: grid;
-  grid-template-columns: repeat(3, 33.3%);
+  grid-template-columns: repeat(3, 1fr);
+  gap: 5px;
+  margin-bottom: 1rem;
 }
 .grid-insta img {
   width: 100%;
-  height: auto;
 }
 
 /*  - - Contact Form - -  */
