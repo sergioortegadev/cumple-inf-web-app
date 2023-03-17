@@ -1,14 +1,16 @@
 import { HashLink } from "react-router-hash-link";
-import Countdown from "../Countdown";
 import { useModal } from "../hooks/useModal";
 import "./Modal.css";
 import { FigureModal } from "./FigureModal";
 import { useState, useEffect } from "react";
-import FormConfirm from "./FormConfirm";
 import { DataCliente } from "./DataCliente";
 import { DataSalon } from "./DataSalon";
+// import FormConfirm from "./FormConfirm";
+// import Countdown from "../Countdown";
 
 export default function Home() {
+  // Después del festejo no lleva Contdown
+
   // Ingresar datos del cliente y fecha límite del contDown en DataCliente.js
   const { limitDate, dataCumple } = DataCliente();
 
@@ -43,6 +45,7 @@ export default function Home() {
 
   // Esta var de estado envía la ubicacion de la foto como props al componente FigureModal que se abre como una ventana modal
   const [data, setData] = useState({});
+  // Dentro de la var de estado data se utiliza "galery" para asignar el grupo de fotos que se manejará en el slide. De esta forma se abren los modales con las fotos de cada galería y se utilizan los botones prev y next.
 
   // Galerias de fotos - Slides
   const [foto, setFoto] = useState(1);
@@ -63,7 +66,11 @@ export default function Home() {
   const btnPhotoNext = () => {
     if (data.galery === "salon" && foto < salon.images.length)
       setFoto(foto + 1);
-    if (data.galery === "cumple" && foto < dataCumple.images.length)
+    if (data.galery === "previa" && foto < dataCumple.previa.length)
+      setFoto(foto + 1);
+    if (data.galery === "posEvento" && foto < dataCumple.posEvento.length)
+      setFoto(foto + 1);
+    if (data.galery === "souvenir" && foto < dataCumple.souvenir.length)
       setFoto(foto + 1);
   };
   const btnPhotoPrev = () => {
@@ -71,39 +78,101 @@ export default function Home() {
   };
 
   useEffect(() => {
-    if (data.galery === "salon") {
-      salon.images.forEach((el) => {
-        if (el.id === foto) {
-          setData({
-            galery: "salon",
-            foto: el.foto,
-          });
-        }
-      });
-    } else {
-      dataCumple.images.forEach((el) => {
-        if (el.id === foto) {
-          setData({
-            galery: "cumple",
-            foto: el.foto,
-          });
-        }
-      });
+    switch (data.galery) {
+      case "salon":
+        salon.images.forEach((el) => {
+          if (el.id === foto) {
+            setData({
+              galery: "salon",
+              foto: el.foto,
+            });
+          }
+        });
+        break;
+
+      case "previa":
+        dataCumple.previa.forEach((el) => {
+          if (el.id === foto) {
+            setData({
+              galery: "previa",
+              foto: el.foto,
+            });
+          }
+        });
+        break;
+
+      case "posEvento":
+        dataCumple.posEvento.forEach((el) => {
+          if (el.id === foto) {
+            setData({
+              galery: "posEvento",
+              foto: el.foto,
+            });
+          }
+        });
+        break;
+
+      case "souvenir":
+        dataCumple.souvenir.forEach((el) => {
+          if (el.id === foto) {
+            setData({
+              galery: "souvenir",
+              foto: el.foto,
+            });
+          }
+        });
+        break;
+
+      default:
+        break;
     }
   }, [foto]);
 
-  function openOneModal(id) {
+  function openOneModal(id, galerybtn) {
     setData({});
     setFoto(id);
-    dataCumple.images.map((el) => {
-      if (id === el.id) {
-        setData({
-          galery: "cumple",
-          id: el.id,
-          foto: el.foto,
+
+    switch (galerybtn) {
+      case "previa":
+        dataCumple.previa.map((el) => {
+          if (id === el.id) {
+            setData({
+              galery: "previa",
+              id: el.id,
+              foto: el.foto,
+            });
+          }
         });
-      }
-    });
+        break;
+
+      case "posEvento":
+        dataCumple.posEvento.map((el) => {
+          if (id === el.id) {
+            setData({
+              galery: "posEvento",
+              id: el.id,
+              foto: el.foto,
+            });
+          }
+        });
+        break;
+
+      case "souvenir":
+        dataCumple.souvenir.map((el) => {
+          if (id === el.id) {
+            setData({
+              galery: "souvenir",
+              id: el.id,
+              foto: el.foto,
+            });
+          }
+        });
+        break;
+
+      default:
+        break;
+    }
+
     openModal();
   }
 
@@ -112,22 +181,28 @@ export default function Home() {
       {/* Menu Desplegado */}
       <aside className="panel">
         <nav className="menu">
-          <HashLink onClick={handleLinkMenu} smooth to="#cuando">
+          {/*  <HashLink onClick={handleLinkMenu} smooth to="#cuando">
             ¿Cuándo se festeja?
+          </HashLink> */}
+          <HashLink onClick={handleLinkMenu} smooth to="#posEvento">
+            Las fotos de la fiesta!
+          </HashLink>
+          <HashLink onClick={handleLinkMenu} smooth to="#souvenir">
+            Los souvenir
           </HashLink>
           <HashLink onClick={handleLinkMenu} smooth to="#salon">
-            ¿Dónde se festeja?
+            ¿Dónde festejamos?
           </HashLink>
-          <HashLink onClick={handleLinkMenu} smooth to="#fotos">
-            Mirá estas fotos!
+          <HashLink onClick={handleLinkMenu} smooth to="#previa">
+            Fotos previas al festejo!
           </HashLink>
-          <HashLink onClick={handleLinkMenu} smooth to="#formConfirm">
+          {/*  <HashLink onClick={handleLinkMenu} smooth to="#formConfirm">
             Confirmá tu participación!
-          </HashLink>
+          </HashLink> */}
         </nav>
       </aside>
 
-      {/*  // Contenido principal  */}
+      {/*  - -  MAIN - Contenido principal  - -  */}
       <main className="container-fluid">
         <div className="hero-image">
           <img src={dataCumple.invitacion} alt="invitacion" />
@@ -146,6 +221,8 @@ export default function Home() {
           </h2>
         </article>
 
+        {/*   Desactivamos Countdown y toda el article "cuando" después de la fiesta.
+
         <article id="cuando" className="content">
           <div className="highlight">
             <h3>¿Cuándo es?</h3>
@@ -160,8 +237,47 @@ export default function Home() {
             limitDate={limitDate}
             name={dataCumple.name}
             fotosEvento={dataCumple.fotosEvento}
-          />
+          /> 
         </article>
+        */}
+
+        {/*  - - posEvento - Fotos de la fiesta - -  */}
+        <article id="posEvento" className="content">
+          <div className="highlight">
+            <h3>Las fotos de la fiesta!</h3>
+          </div>
+          <div className="insta-galery">
+            {dataCumple.posEvento.map((el) => (
+              <div className="insta-gal-div" key={el.id}>
+                <img
+                  className="insta-foto"
+                  onClick={(e) => openOneModal(el.id, "posEvento")}
+                  src={el.foto}
+                  key={el.id}
+                  alt="foto"
+                />
+              </div>
+            ))}
+          </div>
+        </article>
+
+        {/*  - - Los souvenir - -  */}
+        <article id="souvenir" className="content">
+          <div className="highlight">
+            <h3>Las imágenes de todos los souvenir</h3>
+          </div>
+          <div className="grid-insta">
+            {dataCumple.souvenir.map((el) => (
+              <img
+                onClick={(e) => openOneModal(el.id, "souvenir")}
+                src={el.foto}
+                key={el.id}
+                alt="souvenir"
+              />
+            ))}
+          </div>
+        </article>
+
         <article id="salon" className="content">
           <div className="highlight">
             <h2>¿Dónde festejamos?</h2>
@@ -240,6 +356,16 @@ export default function Home() {
                 </a>
               )}
             </div>
+
+            {/*  - - iframe de gmaps - -
+            
+            Se recomienda utilizar estos estilos:
+            style={{
+                width: "100%",
+                height: "30vh",
+                maxHeight: "40vh",
+                style: "border:0",
+              }} */}
             <iframe
               title="Ubicacion Salon en gmaps"
               src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3405.9945390790076!2d-64.22904348464644!3d-31.386714101958383!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x943298dba6407d2f%3A0x17633a4330ac8eab!2sArlek%C3%ADn%20Fiestas%20Infantiles!5e0!3m2!1ses!2sar!4v1677618379217!5m2!1ses!2sar"
@@ -257,20 +383,31 @@ export default function Home() {
         </article>
 
         <article id="joa4banner" className="hero-image">
-          <img src="./assets/joa4.png" alt="logo joaquin 4" />
+          <img src={dataCumple.grafica} alt="logo joaquin 4" />
         </article>
 
-        {/*  - - Fotos cumpleañero/a - -  */}
-        <article id="fotos" className="content">
-          <div className="grid-insta">
-            {dataCumple.images.map((el) => (
-              <img
-                onClick={(e) => openOneModal(el.id)}
-                src={el.foto}
-                key={el.id}
-                alt="foto"
-              />
+        {/*  - - Fotos Previas al festejo del  cumpleañero/a - -  */}
+        <article id="previa" className="content">
+          <div className="highlight">
+            <h3>Las fotos previas a la fiesta!</h3>
+          </div>
+          <div className="insta-galery">
+            {dataCumple.previa.map((el) => (
+              <div className="insta-gal-div" key={el.id}>
+                <img
+                  className="insta-foto"
+                  onClick={(e) => openOneModal(el.id, "previa")}
+                  src={el.foto}
+                  key={el.id}
+                  alt="foto"
+                />
+              </div>
             ))}
+          </div>
+        </article>
+        <article id="gracias" className="content">
+          <div className="highlight">
+            <h3>Muchas gracias!</h3>
           </div>
         </article>
 
@@ -286,9 +423,11 @@ export default function Home() {
           />
         )}
 
+        {/* Se quita el article del formulario después del festejo.
+
         <article id="formConfirm" className="content">
           <FormConfirm />
-        </article>
+        </article> */}
       </main>
 
       {/* Botón Up */}
