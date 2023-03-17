@@ -5,8 +5,8 @@ import { FigureModal } from "./FigureModal";
 import { useState, useEffect } from "react";
 import { DataCliente } from "./DataCliente";
 import { DataSalon } from "./DataSalon";
-// import FormConfirm from "./FormConfirm";
-// import Countdown from "../Countdown";
+import FormConfirm from "./FormConfirm";
+import Countdown from "../Countdown";
 
 export default function Home() {
   // Después del festejo no lleva Contdown
@@ -181,24 +181,25 @@ export default function Home() {
       {/* Menu Desplegado */}
       <aside className="panel">
         <nav className="menu">
-          {/*  <HashLink onClick={handleLinkMenu} smooth to="#cuando">
+          <HashLink onClick={handleLinkMenu} smooth to="#cuando">
             ¿Cuándo se festeja?
-          </HashLink> */}
-          <HashLink onClick={handleLinkMenu} smooth to="#posEvento">
-            Las fotos de la fiesta!
           </HashLink>
+          {/* <HashLink onClick={handleLinkMenu} smooth to="#posEvento">
+            Las fotos de la fiesta!
+          </HashLink> 
           <HashLink onClick={handleLinkMenu} smooth to="#souvenir">
             Los souvenir
-          </HashLink>
+          </HashLink>*/}
           <HashLink onClick={handleLinkMenu} smooth to="#salon">
             ¿Dónde festejamos?
           </HashLink>
           <HashLink onClick={handleLinkMenu} smooth to="#previa">
             Fotos previas al festejo!
           </HashLink>
-          {/*  <HashLink onClick={handleLinkMenu} smooth to="#formConfirm">
+          {/* Desactivar formConfirm despues del festejo */}
+          <HashLink onClick={handleLinkMenu} smooth to="#formConfirm">
             Confirmá tu participación!
-          </HashLink> */}
+          </HashLink>
         </nav>
       </aside>
 
@@ -221,7 +222,7 @@ export default function Home() {
           </h2>
         </article>
 
-        {/*   Desactivamos Countdown y toda el article "cuando" después de la fiesta.
+        {/*   Desactivamos Countdown y toda el article "cuando" después de la fiesta.  */}
 
         <article id="cuando" className="content">
           <div className="highlight">
@@ -237,11 +238,10 @@ export default function Home() {
             limitDate={limitDate}
             name={dataCumple.name}
             fotosEvento={dataCumple.fotosEvento}
-          /> 
+          />
         </article>
-        */}
 
-        {/*  - - posEvento - Fotos de la fiesta - -  */}
+        {/*  - - posEvento - Fotos de la fiesta - -  
         <article id="posEvento" className="content">
           <div className="highlight">
             <h3>Las fotos de la fiesta!</h3>
@@ -260,8 +260,9 @@ export default function Home() {
             ))}
           </div>
         </article>
+        */}
 
-        {/*  - - Los souvenir - -  */}
+        {/*  - - Los souvenir - -  
         <article id="souvenir" className="content">
           <div className="highlight">
             <h3>Las imágenes de todos los souvenir</h3>
@@ -277,6 +278,7 @@ export default function Home() {
             ))}
           </div>
         </article>
+*/}
 
         <article id="salon" className="content">
           <div className="highlight">
@@ -405,11 +407,14 @@ export default function Home() {
             ))}
           </div>
         </article>
+        {/*  - - Despues del festejo activar el  Muchas Gracias! - - 
+        
         <article id="gracias" className="content">
           <div className="highlight">
             <h3>Muchas gracias!</h3>
           </div>
-        </article>
+        </article> 
+        */}
 
         {/*  Modals para la apertura de las fotos del cliente y del salon */}
         {isOpenModal && (
@@ -423,11 +428,11 @@ export default function Home() {
           />
         )}
 
-        {/* Se quita el article del formulario después del festejo.
+        {/* Se quita el article del formulario después del festejo. */}
 
         <article id="formConfirm" className="content">
           <FormConfirm />
-        </article> */}
+        </article>
       </main>
 
       {/* Botón Up */}

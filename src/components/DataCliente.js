@@ -1,6 +1,6 @@
 export const DataCliente = () => {
   // Aquí poner la fecha y hora a calcular, un string en formato "YYYY/MM/DD HH:MM:SS".
-  const limitDate = "2023/03/12 19:00:00";
+  const limitDate = "2024/03/12 19:00:00";
 
   // Datos Cumpleañera/o y flia
 
@@ -10,7 +10,7 @@ export const DataCliente = () => {
     whatsapp: 3515222418,
     añosCumple: 4,
     // "fecha" puede ir en cualquier formato, es el texto que mostrará la web.
-    fecha: "El domingo 12 de marzo",
+    fecha: "El martes 12 de marzo",
     horario: "de 19 a 21:30",
     invitacion: "./assets/hero.jpg",
     // Si hay una pieza para "grafica" se recomienda un png sin fondo, de 900px de ancho.
