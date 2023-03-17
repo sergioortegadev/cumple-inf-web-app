@@ -1,12 +1,12 @@
 import { HashLink } from "react-router-hash-link";
-// import Countdown from "../Countdown";
 import { useModal } from "../hooks/useModal";
 import "./Modal.css";
 import { FigureModal } from "./FigureModal";
 import { useState, useEffect } from "react";
-// import FormConfirm from "./FormConfirm";
 import { DataCliente } from "./DataCliente";
 import { DataSalon } from "./DataSalon";
+// import FormConfirm from "./FormConfirm";
+// import Countdown from "../Countdown";
 
 export default function Home() {
   // Después del festejo no lleva Contdown
@@ -66,7 +66,7 @@ export default function Home() {
   const btnPhotoNext = () => {
     if (data.galery === "salon" && foto < salon.images.length)
       setFoto(foto + 1);
-    if (data.galery === "cumple" && foto < dataCumple.images.length)
+    if (data.galery === "previa" && foto < dataCumple.previa.length)
       setFoto(foto + 1);
     if (data.galery === "posEvento" && foto < dataCumple.posEvento.length)
       setFoto(foto + 1);
@@ -90,11 +90,11 @@ export default function Home() {
         });
         break;
 
-      case "cumple":
-        dataCumple.images.forEach((el) => {
+      case "previa":
+        dataCumple.previa.forEach((el) => {
           if (el.id === foto) {
             setData({
-              galery: "cumple",
+              galery: "previa",
               foto: el.foto,
             });
           }
@@ -133,11 +133,11 @@ export default function Home() {
     setFoto(id);
 
     switch (galerybtn) {
-      case "cumple":
-        dataCumple.images.map((el) => {
+      case "previa":
+        dataCumple.previa.map((el) => {
           if (id === el.id) {
             setData({
-              galery: "cumple",
+              galery: "previa",
               id: el.id,
               foto: el.foto,
             });
@@ -181,6 +181,9 @@ export default function Home() {
       {/* Menu Desplegado */}
       <aside className="panel">
         <nav className="menu">
+          {/*  <HashLink onClick={handleLinkMenu} smooth to="#cuando">
+            ¿Cuándo se festeja?
+          </HashLink> */}
           <HashLink onClick={handleLinkMenu} smooth to="#posEvento">
             Las fotos de la fiesta!
           </HashLink>
@@ -190,9 +193,12 @@ export default function Home() {
           <HashLink onClick={handleLinkMenu} smooth to="#salon">
             ¿Dónde festejamos?
           </HashLink>
-          <HashLink onClick={handleLinkMenu} smooth to="#fotos">
+          <HashLink onClick={handleLinkMenu} smooth to="#previa">
             Fotos previas al festejo!
           </HashLink>
+          {/*  <HashLink onClick={handleLinkMenu} smooth to="#formConfirm">
+            Confirmá tu participación!
+          </HashLink> */}
         </nav>
       </aside>
 
@@ -350,6 +356,16 @@ export default function Home() {
                 </a>
               )}
             </div>
+
+            {/*  - - iframe de gmaps - -
+            
+            Se recomienda utilizar estos estilos:
+            style={{
+                width: "100%",
+                height: "30vh",
+                maxHeight: "40vh",
+                style: "border:0",
+              }} */}
             <iframe
               title="Ubicacion Salon en gmaps"
               src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3405.9945390790076!2d-64.22904348464644!3d-31.386714101958383!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x943298dba6407d2f%3A0x17633a4330ac8eab!2sArlek%C3%ADn%20Fiestas%20Infantiles!5e0!3m2!1ses!2sar!4v1677618379217!5m2!1ses!2sar"
@@ -367,20 +383,20 @@ export default function Home() {
         </article>
 
         <article id="joa4banner" className="hero-image">
-          <img src="./assets/joa4.png" alt="logo joaquin 4" />
+          <img src={dataCumple.grafica} alt="logo joaquin 4" />
         </article>
 
         {/*  - - Fotos Previas al festejo del  cumpleañero/a - -  */}
-        <article id="fotos" className="content">
+        <article id="previa" className="content">
           <div className="highlight">
             <h3>Las fotos previas a la fiesta!</h3>
           </div>
           <div className="insta-galery">
-            {dataCumple.images.map((el) => (
+            {dataCumple.previa.map((el) => (
               <div className="insta-gal-div" key={el.id}>
                 <img
                   className="insta-foto"
-                  onClick={(e) => openOneModal(el.id, "cumple")}
+                  onClick={(e) => openOneModal(el.id, "previa")}
                   src={el.foto}
                   key={el.id}
                   alt="foto"

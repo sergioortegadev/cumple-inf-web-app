@@ -9,7 +9,8 @@ export const DataSalon = () => {
       "https://www.facebook.com/Arlekin-Fiestas-Infantiles-1423939864491867/",
     tiktok: undefined,
     youtube: undefined,
-    imageFront: "./assets/arlekin2.jpg",
+    imageFront: "./assets/salon-frente.jpg",
+    logo: "./assets/salon-logo.jpg",
     images: [
       { id: 1, foto: "./assets/salon/salon1.jpeg" },
       { id: 2, foto: "./assets/salon/salon2.jpeg" },

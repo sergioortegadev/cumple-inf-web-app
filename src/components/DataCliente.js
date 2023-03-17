@@ -1,19 +1,22 @@
 export const DataCliente = () => {
-  // Aquí poner la fecha y hora a calcular, en formato "YYYY/MM/DD HH:MM:SS".
+  // Aquí poner la fecha y hora a calcular, un string en formato "YYYY/MM/DD HH:MM:SS".
   const limitDate = "2023/03/12 19:00:00";
 
   // Datos Cumpleañera/o y flia
 
   const dataCumple = {
     name: "Joaquín",
-    whatsapp: 3515222418,
     /* el número de whatsapp colocar solo si la familia quiere incluir un btn para mensajes por whatsapp. Sino dejar "undefined" */
+    whatsapp: 3515222418,
     añosCumple: 4,
+    // "fecha" puede ir en cualquier formato, es el texto que mostrará la web.
     fecha: "El domingo 12 de marzo",
     horario: "de 19 a 21:30",
     invitacion: "./assets/hero.jpg",
+    // Si hay una pieza para "grafica" se recomienda un png sin fondo, de 900px de ancho.
+    grafica: "./assets/grafica-nombre.png",
     /* Para las imagenes previas recomendamos que ya estén optimizadas: peso aprox 100KB, formato cuadrado 1:1 de 900px de lado */
-    images: [
+    previa: [
       { id: 1, foto: "./assets/previa/foto01.jpg" },
       { id: 2, foto: "./assets/previa/foto02.jpg" },
       { id: 3, foto: "./assets/previa/foto03.jpg" },
